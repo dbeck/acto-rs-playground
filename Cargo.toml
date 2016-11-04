@@ -1,0 +1,12 @@
+[package]
+name = "acto_rs_playground"
+version = "0.1.0"
+authors = ["David Beck <david.beck.priv@gmail.com>"]
+license = "MIT/Apache-2.0"
+description = "Playground for acto-rs"
+keywords = ["actor", "concurrency"]
+readme = "README.md"
+homepage = "https://github.com/dbeck/acto-rs-playground"
+
+[dependencies]
+acto-rs = "0.5.1"
