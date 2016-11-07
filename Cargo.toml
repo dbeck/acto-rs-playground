@@ -9,4 +9,4 @@ readme = "README.md"
 homepage = "https://github.com/dbeck/acto-rs-playground"
 
 [dependencies]
-acto-rs = "0.5.1"
+acto-rs = "0.5.2"
