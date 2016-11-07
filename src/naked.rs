@@ -15,7 +15,7 @@ impl Task for NakedTask {
   // which tells the scheduler, not to execute this task anymore
   fn execute(&mut self, stop: &mut bool) {
     self.count += 1;
-    println!("Running naked #{}", self.count);
+    println!("- {} #{}", self.name, self.count);
     if self.count == 3 {
       // three is enough
       *stop = true;
@@ -46,5 +46,26 @@ pub fn run_naked() {
     Box::new(NakedTask{name:String::from("RunningNaked"), count:0}),
     SchedulingRule::Periodic(PeriodLengthInUsec(1_000_000))).unwrap();
   thread::sleep(time::Duration::from_secs(4));
+  sched.stop();
+}
+
+pub fn increase_my_bill() {
+  let mut sched = scheduler::new();
+  sched.start();
+  sched.add_task(
+    Box::new(NakedTask{name:String::from("IncreaseBill"), count:0}),
+    SchedulingRule::Loop).unwrap();
+  thread::sleep(time::Duration::from_secs(1));
+  sched.stop();
+}
+
+pub fn trigger_me() {
+  let mut sched = scheduler::new();
+  sched.start();
+  let task_id = sched.add_task(
+    Box::new(NakedTask{name:String::from("TriggerMe"), count:0}),
+    SchedulingRule::OnExternalEvent).unwrap();
+  // notify(..) wakes up the task identified by task_id
+  sched.notify(&task_id).unwrap();
   sched.stop();
 }
