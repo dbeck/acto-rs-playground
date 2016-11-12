@@ -1,4 +1,3 @@
-extern crate acto_rs;
 use acto_rs::*;
 use std::{thread, time};
 
