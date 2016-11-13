@@ -1,11 +1,11 @@
 use acto_rs::*;
 
 
-struct SendGreatingsActor {
+struct SendGreetingsActor {
   last_sent: usize,
 }
 
-impl source::Source for SendGreatingsActor {
+impl source::Source for SendGreetingsActor {
 
   type OutputValue = usize;
   type OutputError = String;
@@ -19,11 +19,11 @@ impl source::Source for SendGreatingsActor {
   }
 }
 
-struct PrintGreatingSumActor {
+struct PrintGreetingSumActor {
   sum_received: usize,
 }
 
-impl sink::Sink for PrintGreatingSumActor {
+impl sink::Sink for PrintGreetingSumActor {
 
   type InputValue = usize;
   type InputError = String;
@@ -52,28 +52,28 @@ impl sink::Sink for PrintGreatingSumActor {
   }
 }
 
-pub fn great_five() {
+pub fn greet_five() {
   use acto_rs::connectable::Connectable;
 
   let mut sched = scheduler::new();
   sched.start();
 
-  let greater_queue_size = 2_000;
-  let (greater_task, mut greater_output) =
-    source::new( "SendGreatings",
-                 greater_queue_size,
-                 Box::new(SendGreatingsActor{last_sent:0}));;
+  let greeter_queue_size = 2_000;
+  let (greeter_task, mut greeter_output) =
+    source::new( "SendGreetings",
+                 greeter_queue_size,
+                 Box::new(SendGreetingsActor{last_sent:0}));;
 
   let mut printer_task =
-    sink::new( "PrintGreatingAndSum",
-               Box::new(PrintGreatingSumActor{sum_received:0}));
+    sink::new( "PrintGreetingAndSum",
+               Box::new(PrintGreetingSumActor{sum_received:0}));
 
-  printer_task.connect(&mut greater_output).unwrap();
+  printer_task.connect(&mut greeter_output).unwrap();
 
-  let greater_id = sched.add_task(greater_task, SchedulingRule::OnExternalEvent).unwrap();
+  let greeter_id = sched.add_task(greeter_task, SchedulingRule::OnExternalEvent).unwrap();
   let _printer_id = sched.add_task(printer_task, SchedulingRule::OnMessage);
 
-  sched.notify(&greater_id).unwrap();
+  sched.notify(&greeter_id).unwrap();
 
   sched.stop();
 }

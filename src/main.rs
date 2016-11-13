@@ -9,5 +9,5 @@ fn main() {
   naked::trigger_me();
 
   // great integers
-  great_int::great_five();
+  great_int::greet_five();
 }
