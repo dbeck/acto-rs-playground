@@ -1,6 +1,6 @@
 extern crate acto_rs;
 pub mod naked;
-pub mod great_int;
+pub mod greet_int;
 
 fn main() {
   // naked actors
@@ -8,6 +8,6 @@ fn main() {
   naked::increase_my_bill();
   naked::trigger_me();
 
-  // great integers
-  great_int::greet_five();
+  // greet integers
+  greet_int::greet_five();
 }
